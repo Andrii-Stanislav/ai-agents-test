@@ -57,25 +57,22 @@ What's the weather in London ?
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>
 """
 
-# Dummy Tool function
-def get_weather(location):
-    return f"the weather in {location} is sunny with low temperatures! \n"
+#  2 way
+# ! awaiting for access to https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct
 
-get_weather('London')
+messages=[
+    {"role": "system", "content": SYSTEM_PROMPT},
+    {"role": "user", "content": "What's the weather in London ?"},
+  ]
 
-output = client.text_generation(
-    prompt,
-    max_new_tokens=100,
-    stop=["Observation:"] # Let's stop before any actual function is called
-)
+# tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.2-3B-Instruct")
 
-new_prompt = prompt + output + get_weather('London')
+# prompt_2 = tokenizer.apply_chat_template(conversation=messages, tokenize=True, add_generation_prompt=True, use_auth_token=True)
 
-print('output: ', output)
+# print('prompt_2: ', prompt_2)
+# output_2 = client.text_generation(
+#     prompt=prompt_2,
+#     max_new_tokens=100,
+# )
 
-final_output = client.text_generation(
-    prompt=new_prompt,
-    max_new_tokens=200,
-)
-
-print('final_output: ', final_output)
+# print('output_2: ', output_2)
